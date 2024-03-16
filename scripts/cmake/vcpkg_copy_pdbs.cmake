@@ -14,7 +14,9 @@ function(vcpkg_copy_pdbs)
 
     set(dlls_without_matching_pdbs "")
 
-    if(VCPKG_LIBRARY_LINKAGE STREQUAL "dynamic" AND VCPKG_TARGET_IS_WINDOWS AND NOT VCPKG_TARGET_IS_MINGW)
+    # LLVM_MINGW *can* generate PDB files, but I'm not sure how to find the pdb from the dll.
+    # Grepping though the binary, I can see that the string is in there, I just don't know how to access it.
+    if(VCPKG_LIBRARY_LINKAGE STREQUAL "dynamic" AND VCPKG_TARGET_IS_WINDOWS AND NOT (VCPKG_TARGET_IS_MINGW OR VCPKG_TARGET_IS_LLVM_MINGW))
         file(GLOB_RECURSE dlls ${arg_BUILD_PATHS})
 
         set(vslang_backup "$ENV{VSLANG}")

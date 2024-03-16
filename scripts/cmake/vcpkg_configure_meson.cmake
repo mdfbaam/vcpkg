@@ -71,7 +71,7 @@ endfunction()
 
 # Generates the required compiler properties for meson
 function(z_vcpkg_meson_set_flags_variables config_type)
-    if(VCPKG_TARGET_IS_WINDOWS AND NOT VCPKG_TARGET_IS_MINGW)
+    if(VCPKG_TARGET_IS_WINDOWS AND NOT VCPKG_TARGET_IS_MINGW AND NOT VCPKG_TARGET_IS_LLVM_MINGW)
         set(libpath_flag /LIBPATH:)
     else()
         set(libpath_flag -L)
