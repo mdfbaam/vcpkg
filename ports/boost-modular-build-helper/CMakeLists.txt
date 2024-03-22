@@ -22,9 +22,9 @@ endif()
 
 if(BUILD_SHARED_LIBS)
     list(APPEND B2_OPTIONS link=shared)
-else()
-    list(APPEND B2_OPTIONS link=static)
 endif()
+
+list(APPEND B2_OPTIONS link=static)
 
 if(VCPKG_DETECTED_CMAKE_SIZEOF_VOID_P EQUAL "8")
     list(APPEND B2_OPTIONS address-model=64)

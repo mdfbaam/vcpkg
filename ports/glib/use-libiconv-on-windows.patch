@@ -26,3 +26,26 @@ index d465253af..34ce69e4d 100644
  else
    libiconv = dependency('iconv')
  endif
+
+diff --git a/gio/meson.build b/gio/meson.build
+index f9fdf6e..1a8f0f5 100644
+--- a/gio/meson.build
++++ b/gio/meson.build
+@@ -849,7 +849,7 @@ libgio = library('gio-2.0',
+   dependencies : [libz_dep, libdl_dep, libmount_dep, libglib_dep,
+                   libgobject_dep, libgmodule_dep, selinux_dep, xattr_dep,
+                   platform_deps, network_libs, libsysprof_capture_dep,
+-                  gioenumtypes_dep, gvdb_dep],
++                  gioenumtypes_dep, gvdb_dep, libiconv],
+   c_args : [gio_c_args, gio_c_args_internal],
+   objc_args : [gio_c_args, gio_c_args_internal],
+   gnu_symbol_visibility : 'hidden',
+@@ -867,7 +867,7 @@ schemas_subdir = join_paths('glib-2.0', 'schemas')
+ dtds_subdir = join_paths('glib-2.0', 'dtds')
+ 
+ libgio_dep = declare_dependency(link_with : libgio,
+-  dependencies : [libgmodule_dep, libgobject_dep, gioenumtypes_dep],
++  dependencies : [libgmodule_dep, libgobject_dep, gioenumtypes_dep, libiconv],
+   include_directories : [gioinc],
+   variables : [
+     'schemasdir=' + join_paths(glib_datadir, schemas_subdir),

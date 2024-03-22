@@ -1,10 +1,17 @@
+if(VCPKG_TARGET_IS_LLVM_MINGW)
+	list(APPEND OPTIONAL_PATCHES "llvm-mingw-dependencies.patch")
+	list(APPEND OPTIONAL_PATCHES "use-internal-getopt.patch")
+endif()
+
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO tbeu/matio
     REF "v${VERSION}"
     SHA512 b0ff73b7d39b68c87f371e397ed8f46040f1334e8d81d2b462f62bf7d14c6566e4f5a0c55955696cbbc035ff7b41e5811ce7429476ae48c1465f48f77b4dc6b2
     HEAD_REF master
-    PATCHES fix-dependencies.patch
+    PATCHES 
+		fix-dependencies.patch
+		${OPTIONAL_PATCHES}
 )
 
 string(COMPARE EQUAL "${VCPKG_LIBRARY_LINKAGE}" "dynamic" BUILD_SHARED)

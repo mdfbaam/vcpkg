@@ -31,7 +31,7 @@ if("fat" IN_LIST FEATURES)
     vcpkg_list(APPEND OPTIONS "--enable-fat")
 endif()
 
-if(VCPKG_TARGET_IS_WINDOWS AND NOT VCPKG_TARGET_IS_MINGW)
+if(VCPKG_TARGET_IS_WINDOWS AND NOT (VCPKG_TARGET_IS_MINGW OR VCPKG_TARGET_IS_LLVM_MINGW))
     vcpkg_list(APPEND OPTIONS
         "ac_cv_func_memset=yes"
         "gmp_cv_asm_w32=.word"
@@ -58,7 +58,7 @@ if(VCPKG_DETECTED_CMAKE_C_COMPILER_ID STREQUAL "MSVC")
         vcpkg_find_acquire_program(CLANG)
         set(ccas "${CLANG}")
     endif()
-elseif(VCPKG_TARGET_IS_MINGW AND VCPKG_LIBRARY_LINKAGE STREQUAL "dynamic")
+elseif((VCPKG_TARGET_IS_MINGW OR VCPKG_TARGET_IS_LLVM_MINGW) AND VCPKG_LIBRARY_LINKAGE STREQUAL "dynamic")
     # not exporting asm functions
     set(disable_assembly ON)
 elseif(VCPKG_TARGET_IS_LINUX AND VCPKG_TARGET_ARCHITECTURE STREQUAL "x86")

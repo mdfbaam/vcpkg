@@ -87,16 +87,18 @@ set(LIBRSVG_SOURCES
     librsvg-enum-types.h
 )
 
-if(WIN32)
-    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.win32" "${CMAKE_CURRENT_BINARY_DIR}/config.h" COPYONLY)
-    file(READ "${CMAKE_CURRENT_SOURCE_DIR}/rsvg.symbols" rsvg_symbols)
-    string(REGEX REPLACE "/[*][^*]*[*]/" "" rsvg_symbols "${rsvg_symbols}")
-    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/rsvg.def" "EXPORTS\n${rsvg_symbols}")
-    list(APPEND LIBRSVG_SOURCES "${CMAKE_CURRENT_BINARY_DIR}/rsvg.def")
-else()
-    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.linux" "${CMAKE_CURRENT_BINARY_DIR}/config.h" COPYONLY)
-    list(APPEND LIBRSVG_SOURCES rsvg.symbols)
-endif()
+#if(WIN32)
+#    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.win32" "${CMAKE_CURRENT_BINARY_DIR}/config.h" COPYONLY)
+#    file(READ "${CMAKE_CURRENT_SOURCE_DIR}/rsvg.symbols" rsvg_symbols)
+#    string(REGEX REPLACE "/[*][^*]*[*]/" "" rsvg_symbols "${rsvg_symbols}")
+#    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/rsvg.def" "EXPORTS\n${rsvg_symbols}")
+#    list(APPEND LIBRSVG_SOURCES "${CMAKE_CURRENT_BINARY_DIR}/rsvg.def")
+#else()
+#    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.linux" "${CMAKE_CURRENT_BINARY_DIR}/config.h" COPYONLY)
+#    list(APPEND LIBRSVG_SOURCES rsvg.symbols)
+#endif()
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.linux" "${CMAKE_CURRENT_BINARY_DIR}/config.h" COPYONLY)
+list(APPEND LIBRSVG_SOURCES rsvg.symbols)
 
 add_library(${LIBRSVG_TARGET} ${LIBRSVG_SOURCES})
 target_compile_definitions(${LIBRSVG_TARGET} PRIVATE

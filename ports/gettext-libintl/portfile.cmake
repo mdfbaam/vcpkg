@@ -24,6 +24,7 @@ vcpkg_extract_source_archive(SOURCE_PATH
     PATCHES
         uwp.patch
         0003-Fix-win-unicode-paths.patch
+		remove-advapi32.patch
 )
 
 if(VCPKG_HOST_IS_WINDOWS)
@@ -41,7 +42,7 @@ endif()
 set(OPTIONS
     --no-recursion
     --enable-relocatable #symbol duplication with glib-init.c?
-    --with-included-gettext
+	--with-included-gettext
     --without-libintl-prefix
     --disable-dependency-tracking
     ac_cv_path_GMSGFMT=false
@@ -61,7 +62,7 @@ if(VCPKG_TARGET_IS_WINDOWS)
         # Cf. https://github.com/microsoft/vcpkg/issues/35974
         gl_cv_func_printf_directive_n=no
     )
-    if(NOT VCPKG_TARGET_IS_MINGW)
+    if(NOT (VCPKG_TARGET_IS_MINGW OR VCPKG_TARGET_IS_LLVM_MINGW))
         list(APPEND OPTIONS
             # Don't take from port getopt-win32
             ac_cv_header_getopt_h=no

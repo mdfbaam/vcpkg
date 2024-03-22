@@ -70,7 +70,7 @@ if(OPENSSL_NO_AUTOLOAD_CONFIG)
     vcpkg_list(APPEND CONFIGURE_OPTIONS no-autoload-config)
 endif()
 
-if(VCPKG_TARGET_IS_WINDOWS AND NOT VCPKG_TARGET_IS_MINGW)
+if(VCPKG_TARGET_IS_WINDOWS AND NOT (VCPKG_TARGET_IS_MINGW OR VCPKG_TARGET_IS_LLVM_MINGW))
     include("${CMAKE_CURRENT_LIST_DIR}/windows/portfile.cmake")
     include("${CMAKE_CURRENT_LIST_DIR}/install-pc-files.cmake")
 else()

@@ -2,13 +2,11 @@ vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO tukaani-project/xz
     REF "v${VERSION}"
-    SHA512 c28461123562564e030f3f733f078bc4c840e87598d9f4b718d4bca639120d8133f969c45d7bdc62f33f081d789ec0f14a1791fb7da18515682bfe3c0c7362e0
+    SHA512 6391794eee783302a3f276299fc92df3e81a05dee0eab61cbb8505858da6d535ae2ac5d067f6825d6963b1e4c3d9616039f495f11f99ecec692ccd79ec17ba8d
     HEAD_REF master
     PATCHES
         fix_config_include.patch
-        win_output_name.patch # Fix output name on Windows. Autotool build does not generate lib prefixed libraries on windows. 
-        add_support_ios.patch # add install bundle info for support ios 
-        build-tools.patch
+		build-tools.patch
 )
 
 vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS

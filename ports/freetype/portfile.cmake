@@ -52,6 +52,10 @@ string(REPLACE "\${_IMPORT_PREFIX}/lib/brotlidec.lib" [[\$<\$<NOT:\$<CONFIG:DEBU
 file(WRITE ${CURRENT_PACKAGES_DIR}/share/freetype/freetype-targets.cmake "${CONFIG_MODULE}")
 
 find_library(FREETYPE_DEBUG NAMES freetyped PATHS "${CURRENT_PACKAGES_DIR}/debug/lib/" NO_DEFAULT_PATH)
+if ((EXISTS ${CURRENT_PACKAGES_DIR}/debug/lib/libfreetyped.a) OR (EXISTS ${CURRENT_PACKAGES_DIR}/debug/lib/libfreetyped.dll.a))
+	set(FREETYPE_DEBUG ON)
+endif()
+
 if(NOT VCPKG_BUILD_TYPE)
     file(READ "${CURRENT_PACKAGES_DIR}/debug/lib/pkgconfig/freetype2.pc" _contents)
     if(FREETYPE_DEBUG)

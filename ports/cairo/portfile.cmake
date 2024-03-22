@@ -43,7 +43,7 @@ else()
     list(APPEND OPTIONS -Dglib=disabled)
 endif()
 
-if(VCPKG_TARGET_IS_WINDOWS AND NOT VCPKG_TARGET_IS_MINGW)
+if(VCPKG_TARGET_IS_WINDOWS AND NOT (VCPKG_TARGET_IS_MINGW OR VCPKG_TARGET_IS_LLVM_MINGW))
     set(ENV{CPP} "cl_cpp_wrapper")
 endif()
 
@@ -55,6 +55,7 @@ vcpkg_configure_meson(
         -Dzlib=enabled
         -Dpng=enabled
         -Dspectre=auto
+		-Ddwrite=disabled
         -Dgtk2-utils=disabled
         -Dsymbol-lookup=disabled
 )

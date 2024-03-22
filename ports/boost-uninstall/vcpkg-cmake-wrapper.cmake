@@ -8,4 +8,17 @@ if("${CMAKE_VS_PLATFORM_TOOLSET}" STREQUAL "v120")
 else()
     set(Boost_COMPILER "-vc140")
 endif()
+
+if(
+    ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") AND
+    (("${VCPKG_TARGET_TRIPLET}" STREQUAL "x64-llvm-mingw-static") OR ("${VCPKG_TARGET_TRIPLET}" STREQUAL "x64-llvm-mingw-dynamic"))
+)
+    string(REPLACE "." ";" VERSION_LIST ${CMAKE_CXX_COMPILER_VERSION})
+    list(GET VERSION_LIST 0 CLANG_VERSION_MAJOR)
+    list(GET VERSION_LIST 1 CLANG_VERSION_MINOR)
+    list(GET VERSION_LIST 2 CLANG_VERSION_PATCH)
+
+    set(Boost_COMPILER "-clang${CLANG_VERSION_MAJOR}")
+endif()
+
 _find_package(${ARGS})

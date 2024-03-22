@@ -34,6 +34,9 @@ else()
     set(cares_CARES_PROVIDER "package")
 endif()
 
+string(APPEND VCPKG_CXX_FLAGS " -DSTRSAFE_NO_DEPRECATE")
+string(APPEND VCPKG_C_FLAGS " -DSTRSAFE_NO_DEPRECATE")
+
 vcpkg_check_features(
     OUT_FEATURE_OPTIONS FEATURE_OPTIONS
     FEATURES

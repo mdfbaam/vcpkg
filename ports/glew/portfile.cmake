@@ -31,7 +31,7 @@ vcpkg_cmake_config_fixup(CONFIG_PATH lib/cmake/glew)
 # Skip check the required dependency opengl
 vcpkg_fixup_pkgconfig(SKIP_CHECK)
 
-if(VCPKG_TARGET_IS_WINDOWS AND NOT VCPKG_TARGET_IS_MINGW)
+if(VCPKG_TARGET_IS_WINDOWS AND NOT (VCPKG_TARGET_IS_MINGW OR VCPKG_TARGET_IS_LLVM_MINGW))
 set(_targets_cmake_files)
 if(NOT DEFINED VCPKG_BUILD_TYPE OR VCPKG_BUILD_TYPE STREQUAL "debug")
     list(APPEND _targets_cmake_files "${CURRENT_PACKAGES_DIR}/share/glew/glew-targets-debug.cmake")

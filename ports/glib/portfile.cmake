@@ -16,6 +16,8 @@ if(APPLE)
     list(APPEND VCPKG_CMAKE_CONFIGURE_OPTIONS "-DVCPKG_ENABLE_OBJC=1")
 endif()
 
+string(APPEND VCPKG_LINKER_FLAGS " -Wl,--allow-multiple-definition")
+
 vcpkg_list(SET OPTIONS)
 if (selinux IN_LIST FEATURES)
     if(NOT EXISTS "/usr/include/selinux")

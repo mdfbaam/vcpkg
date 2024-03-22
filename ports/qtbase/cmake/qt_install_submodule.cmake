@@ -322,6 +322,8 @@ function(qt_fixup_and_cleanup)
             file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/bin/" "${CURRENT_PACKAGES_DIR}/debug/bin/")
         endif()
     endif()
+	
+	vcpkg_fixup_pkgconfig()
 
 endfunction()
 

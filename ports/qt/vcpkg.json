@@ -157,48 +157,53 @@
       ]
     },
     "qttranslations",
-    "qtvirtualkeyboard",
-    {
-      "name": "qtwebchannel",
-      "default-features": false,
-      "features": [
-        "qml"
-      ]
-    },
-    {
-      "name": "qtwebengine",
-      "default-features": false,
-      "features": [
-        "geolocation",
-        "spellchecker",
-        "webchannel"
-      ],
-      "platform": "!static & !(windows & arm)"
-    },
-    {
-      "name": "qtwebsockets",
-      "default-features": false,
-      "features": [
-        "qml"
-      ]
-    },
-    {
-      "name": "qtwebview",
-      "default-features": false
-    },
-    {
-      "name": "qtwebview",
-      "default-features": false,
-      "features": [
-        "webengine"
-      ],
-      "platform": "!static & !(windows & arm)"
-    }
+    "qtvirtualkeyboard"
   ],
   "default-features": [
     "default-features"
   ],
   "features": {
+    "web-engine": {
+      "description": "Qt web support",
+      "dependencies": [
+        {
+          "name": "qtwebchannel",
+          "default-features": false,
+          "features": [
+            "qml"
+          ]
+        },
+        {
+          "name": "qtwebengine",
+          "default-features": false,
+          "features": [
+            "geolocation",
+            "spellchecker",
+            "webchannel"
+          ],
+          "platform": "!static & !(windows & arm)"
+        },
+        {
+          "name": "qtwebsockets",
+          "default-features": false,
+          "features": [
+            "qml"
+          ]
+        },
+        {
+          "name": "qtwebview",
+          "default-features": false
+        },
+        {
+          "name": "qtwebview",
+          "default-features": false,
+          "features": [
+            "webengine"
+          ],
+          "platform": "!static & !(windows & arm)"
+        }
+      ]
+    },
     "default-features": {
       "description": "Platform-dependent default features",
       "dependencies": [

@@ -37,7 +37,7 @@ function(copy_from_windows_sdk WINDOWS_SDK)
 endfunction()
 
 if(VCPKG_TARGET_IS_WINDOWS)
-    if(VCPKG_TARGET_IS_MINGW)
+    if(VCPKG_TARGET_IS_MINGW OR VCPKG_TARGET_IS_LLVM_MINGW)
         set(VCPKG_POLICY_EMPTY_PACKAGE enabled)
         set(WINDOWS_SDK_SEMVER "10.0.0")
         set(WINDOWS_GL_CFLAGS "")
