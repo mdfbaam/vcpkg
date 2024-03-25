@@ -21,6 +21,7 @@ vcpkg_extract_source_archive(SOURCE_PATH
         fix-win-build.patch
         vcpkg-cross-data.patch
         darwin-rpath.patch
+        fix-python-path-escape.patch
 )
 
 vcpkg_find_acquire_program(PYTHON3)
