@@ -1,0 +1,20 @@
+diff --git a/source/matplot/axes_objects/matrix.cpp b/source/matplot/axes_objects/matrix.cpp
+index f696a66..487cee8 100644
+--- a/source/matplot/axes_objects/matrix.cpp
++++ b/source/matplot/axes_objects/matrix.cpp
+@@ -122,7 +122,7 @@ namespace matplot {
+         if (always_hide_labels_ || matrices_.size() > 1) {
+             return false;
+         } else {
+-            return matrices_[0].size() < 20 && matrices_[0][0].size() < 30;
++            return matrices_[0].size() < 100 && matrices_[0][0].size() < 100;
+         }
+     }
+ 
+@@ -438,4 +438,4 @@ namespace matplot {
+         touch();
+         return *this;
+     }
+-} // namespace matplot
+\ No newline at end of file
++} // namespace matplot
