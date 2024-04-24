@@ -1,0 +1,7 @@
+{
+  "name": "fmm",
+  "version-date": "2023-05-11",
+  "description": "Single file, header-only, no dependencies C++ implementation of the fast marching method in arbitrary dimensions.",
+  "homepage": "https://github.com/thinks/fast-marching-method",
+  "license": "MIT"
+}
