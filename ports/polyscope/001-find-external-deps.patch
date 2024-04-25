@@ -1,0 +1,157 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 77dc97b..6828bad 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -13,7 +13,7 @@ set(POLYSCOPE_BACKEND_OPENGL_MOCK "ON" CACHE BOOL "Enable openGL_mock backend")
+ set(POLYSCOPE_BACKEND_OPENGL3_EGL "AUTO" CACHE STRING "Enable openGL3_egl backend") # 'AUTO' means "if we're on linux and EGL.h is available"
+ 
+ ### Do anything needed for dependencies and bring their stuff in to scope
+-add_subdirectory(deps)
++include(deps/CMakeLists.txt)
+ 
+ ### Add things for this project
+ add_subdirectory(src)
+diff --git a/deps/CMakeLists.txt b/deps/CMakeLists.txt
+index d7bded0..d63b0a4 100644
+--- a/deps/CMakeLists.txt
++++ b/deps/CMakeLists.txt
+@@ -1,43 +1,24 @@
+ if("${POLYSCOPE_BACKEND_OPENGL3_GLFW}")
+-
+-  ## Glad
+-  if(NOT TARGET glad)
+-    add_subdirectory(glad)
+-  endif()
+-
+-  ## GLFW
+-  if(NOT TARGET glfw)
+-    set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+-    set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+-    set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+-    set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
+-    add_subdirectory(glfw)
+-  endif()
++  find_package(glad REQUIRED)
++  find_package(glfw3 REQUIRED)
+ endif()
+ 
+ ## glm
+-if(NOT TARGET glm::glm)
+-  add_subdirectory(glm)
+-  target_compile_definitions(glm INTERFACE GLM_ENABLE_EXPERIMENTAL)
+-  set_target_properties(glm PROPERTIES LINKER_LANGUAGE CXX)
+-endif()
++find_package(glm CONFIG REQUIRED)
++add_compile_definitions(GLM_ENABLE_EXPERIMENTAL)
+ 
+ ## Imgui
+-if(NOT TARGET imgui)
+-  add_subdirectory(imgui)
+-endif()
++find_package(imgui REQUIRED)
+ 
+ ## Json
+-if(NOT TARGET nlohmann_json::nlohmann_json)
+-  add_subdirectory(json)
+-endif()
++find_package(nlohmann_json REQUIRED)
+ 
+ ## MarchingCube
+ if(NOT TARGET MarchingCube::MarchingCube)
+-  add_subdirectory(MarchingCubeCpp)
++  add_subdirectory(deps/MarchingCubeCpp)
+ endif()
+ 
+ ## stb
+ if(NOT TARGET stb)
+-  add_subdirectory(stb)
+-endif()
++  add_subdirectory(deps/stb)
++endif()
+\ No newline at end of file
+diff --git a/deps/stb/CMakeLists.txt b/deps/stb/CMakeLists.txt
+index 3d8ba43..2f846f0 100644
+--- a/deps/stb/CMakeLists.txt
++++ b/deps/stb/CMakeLists.txt
+@@ -1,6 +1,7 @@
+ # Create a library for the viewer code
+ add_library(
+     stb
++    STATIC
+     stb_impl.cpp
+ )
+ 
+diff --git a/include/polyscope/render/opengl/gl_engine_glfw.h b/include/polyscope/render/opengl/gl_engine_glfw.h
+index 88c38f1..6994912 100644
+--- a/include/polyscope/render/opengl/gl_engine_glfw.h
++++ b/include/polyscope/render/opengl/gl_engine_glfw.h
+@@ -24,8 +24,8 @@
+ 
+ #include "imgui.h"
+ #define IMGUI_IMPL_OPENGL_LOADER_GLAD
+-#include "backends/imgui_impl_glfw.h"
+-#include "backends/imgui_impl_opengl3.h"
++#include "imgui_impl_glfw.h"
++#include "imgui_impl_opengl3.h"
+ 
+ #include "polyscope/render/opengl/gl_engine.h"
+ 
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 9d03d96..a7b91d9 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -69,7 +69,7 @@ if("${POLYSCOPE_BACKEND_OPENGL3_GLFW}")
+   else()
+       # On Windows/Linux, use the glad openGL loader
+ 
+-      list(APPEND BACKEND_LIBS glad)
++      list(APPEND BACKEND_LIBS glad::glad)
+   endif()
+ 
+   add_definitions(-DPOLYSCOPE_BACKEND_OPENGL3_GLFW_ENABLED)
+@@ -371,5 +371,5 @@ add_definitions(-DNOMINMAX)
+ target_include_directories(polyscope PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../include")
+ 
+ # Link settings
+-target_link_libraries(polyscope PUBLIC imgui glm::glm)
++target_link_libraries(polyscope PUBLIC imgui::imgui glm::glm)
+ target_link_libraries(polyscope PRIVATE "${BACKEND_LIBS}" stb nlohmann_json::nlohmann_json MarchingCube::MarchingCube)
+diff --git a/src/polyscope.cpp b/src/polyscope.cpp
+index b26dec1..07c70c8 100644
+--- a/src/polyscope.cpp
++++ b/src/polyscope.cpp
+@@ -19,7 +19,7 @@
+ #include "nlohmann/json.hpp"
+ using json = nlohmann::json;
+ 
+-#include "backends/imgui_impl_opengl3.h"
++#include "imgui_impl_opengl3.h"
+ 
+ namespace polyscope {
+ 
+diff --git a/src/render/opengl/gl_engine_egl.cpp b/src/render/opengl/gl_engine_egl.cpp
+index 76a957a..2db5a09 100644
+--- a/src/render/opengl/gl_engine_egl.cpp
++++ b/src/render/opengl/gl_engine_egl.cpp
+@@ -6,7 +6,7 @@
+ 
+ #include "polyscope/render/opengl/gl_engine_egl.h"
+ 
+-#include "backends/imgui_impl_opengl3.h"
++#include "imgui_impl_opengl3.h"
+ #include "polyscope/render/engine.h"
+ 
+ #include "stb_image.h"
+diff --git a/src/render/opengl/gl_engine_glfw.cpp b/src/render/opengl/gl_engine_glfw.cpp
+index 4eede7a..9402c46 100644
+--- a/src/render/opengl/gl_engine_glfw.cpp
++++ b/src/render/opengl/gl_engine_glfw.cpp
+@@ -4,7 +4,7 @@
+ 
+ #include "polyscope/render/opengl/gl_engine_glfw.h"
+ 
+-#include "backends/imgui_impl_opengl3.h"
++#include "imgui_impl_opengl3.h"
+ #include "polyscope/polyscope.h"
+ #include "polyscope/render/engine.h"
+ 

@@ -1,0 +1,26 @@
+{
+  "name": "polyscope",
+  "version": "2.2.1",
+  "port-version": 1,
+  "description": "A C++ & Python viewer for 3D data like meshes and point clouds",
+  "homepage": "https://github.com/nmwsharp/polyscope",
+  "license": "MIT",
+  "dependencies": [
+    {
+      "name": "vcpkg-cmake",
+      "host": true
+    },
+    {
+      "name": "imgui",
+      "features": [
+        "glfw-binding",
+        "opengl3-binding"
+      ]
+    },
+    "stb",
+    "glad",
+    "glfw3",
+    "glm",
+    "nlohmann-json"
+  ]
+}
