@@ -13,7 +13,7 @@ vcpkg_from_github(
     SHA512 8ecb13fa206ff6762dec74c4de0778bf275e1ebf11ec1b48e8c0e544cf2990220e1be2b3bc9c658f06cb6714c9cc103fa81f10c079a32128218ebdaf265514d5
     HEAD_REF master
     PATCHES
-                fix-dependencies.patch 001-fix-heatmap-labels.patch
+                fix-dependencies.patch 001-fix-heatmap-labels.patch 002-change-precision.patch
 )
 
 vcpkg_check_features(

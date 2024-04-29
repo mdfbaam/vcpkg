@@ -1,0 +1,13 @@
+diff --git a/source/matplot/axes_objects/matrix.cpp b/source/matplot/axes_objects/matrix.cpp
+index 487cee8..c16f159 100644
+--- a/source/matplot/axes_objects/matrix.cpp
++++ b/source/matplot/axes_objects/matrix.cpp
+@@ -167,7 +167,7 @@ namespace matplot {
+ 
+         // stream matrix
+         std::stringstream ss;
+-        ss.precision(10);
++        ss.precision(1);
+         ss << std::fixed;
+         double x_width_ = x_width();
+         double y_width_ = y_width();
